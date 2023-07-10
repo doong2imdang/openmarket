@@ -42,11 +42,13 @@ const HeaderStyle = styled.header`
   align-items: center;
   justify-content: space-around;
   padding: 22px 0;
+  min-height: 90px;
 `;
 
 const SearchInput = styled(Input)`
-  padding-left: 24px;
+  padding: 13px 60px 13px 24px;
   outline: none;
+  margin-left: -25px;
 `;
 
 const Search = styled.div`
@@ -57,7 +59,7 @@ const Search = styled.div`
   button {
     position: absolute;
     right: 25px;
-    top: 15px;
+    top: 10px;
   }
 `;
 
