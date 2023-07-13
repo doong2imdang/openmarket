@@ -26,7 +26,6 @@ const LabelStyle = styled.label`
 `;
 
 const InputStyle = styled.input`
-  width: 480px;
   padding: 20px 0;
   font-size: 16px;
   ${(props) =>
