@@ -38,29 +38,31 @@ export default function Footer() {
             </button>
           </li>
         </UlSns>
+        <UlInfo>
+          <li>
+            <strong>(주)HODU SHOP</strong>
+          </li>
+          <li>
+            <p>제주특별자치도 제주시 동광고 137 제주코딩베이스캠프</p>
+          </li>
+          <li>
+            <p>사업자 번호: 000-0000-0000 | 통신판매업</p>
+          </li>
+          <li>
+            <p>대표: 김호두</p>
+          </li>
+        </UlInfo>
       </UlContainer>
-      <UlInfo>
-        <li>
-          <strong>(주)HODU SHOP</strong>
-        </li>
-        <li>
-          <p>제주특별자치도 제주시 동광고 137 제주코딩베이스캠프</p>
-        </li>
-        <li>
-          <p>사업자 번호: 000-0000-0000 | 통신판매업</p>
-        </li>
-        <li>
-          <p>대표: 김호두</p>
-        </li>
-      </UlInfo>
     </>
   );
 }
 
 const UlContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
   position: relative;
+  padding: 0 50px;
 
   ::after {
     content: "";
@@ -75,6 +77,7 @@ const UlContainer = styled.div`
 `;
 
 const UlList = styled.ul`
+  grid-row: 1;
   display: flex;
   gap: 15px;
   padding: 50px 35px;
@@ -86,9 +89,10 @@ const UlList = styled.ul`
 `;
 
 const UlSns = styled.ul`
+  grid-row: 1;
   display: flex;
   gap: 14px;
-  padding: 50px 0;
+  padding: 50px 35px;
 
   li {
     button {
@@ -109,10 +113,10 @@ const UlSns = styled.ul`
 `;
 
 const UlInfo = styled.ul`
+  grid-row: 2;
   display: flex;
   flex-direction: column;
-  transform: translateX(15%);
-  padding-top: 30px;
+  padding: 0 35px;
 
   li {
     font-size: 14px;
