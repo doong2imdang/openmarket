@@ -67,10 +67,10 @@ const UlContainer = styled.div`
   ::after {
     content: "";
     position: absolute;
-    bottom: 0;
+    bottom: 50%;
     left: 50%;
     transform: translateX(-50%);
-    width: 1400px;
+    width: calc(100% - 140px);
     height: 1px;
     background-color: var(--color-maingrey);
   }
