@@ -39,14 +39,15 @@ export default function ProductList() {
 }
 
 const UlStyle = styled.ul`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  place-items: center;
-  padding: 0 50px 100px 50px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 70px;
+  justify-content: center;
+  padding: 50px 100px 130px 100px;
+
   li {
     display: flex;
     flex-direction: column;
-    padding: 50px 25px;
 
     img {
       max-width: 380px;
