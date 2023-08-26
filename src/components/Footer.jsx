@@ -63,12 +63,12 @@ const UlContainer = styled.div`
   grid-template-columns: 1fr;
   grid-template-rows: auto auto;
   position: relative;
-  padding: 0 50px;
+  padding: 0 50px 50px 50px;
 
   ::after {
     content: "";
     position: absolute;
-    bottom: 50%;
+    bottom: 60%;
     left: 50%;
     transform: translateX(-50%);
     width: calc(100% - 140px);
