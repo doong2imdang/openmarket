@@ -28,9 +28,9 @@ export default function ProductList() {
         {products.map((product) => (
           <li key={product.product_id}>
             <img src={product.image} alt="판매상품" />
-            <span>{product.store_name}</span>
+            <p>{product.store_name}</p>
             <span>{product.product_name}</span>
-            <span>{product.price}</span>
+            <strong>{product.price.toLocaleString()}원</strong>
           </li>
         ))}
       </UlStyle>
@@ -40,14 +40,35 @@ export default function ProductList() {
 
 const UlStyle = styled.ul`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   place-items: center;
-
+  padding: 0 50px 100px 50px;
   li {
     display: flex;
     flex-direction: column;
-  }
-  img {
-    max-width: 360px;
+    padding: 50px 25px;
+
+    img {
+      max-width: 380px;
+      border: 1px solid var(--color-lightgrey);
+      border-radius: 10px;
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
+
+    p {
+      font-size: 22px;
+      color: var(--color-grey);
+      padding: 18px 0;
+    }
+
+    span {
+      font-size: 22px;
+      padding-bottom: 18px;
+    }
+
+    strong {
+      font-size: 24px;
+      font-weight: bold;
+    }
   }
 `;
