@@ -58,6 +58,7 @@ export default function Footer() {
 }
 
 const UlContainer = styled.div`
+  background: var(--color-lightgrey);
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto;
