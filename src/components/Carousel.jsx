@@ -67,8 +67,8 @@ export default function Carousel() {
 }
 
 const Container = styled.div`
-  height: 500px;
   overflow: hidden;
+  max-height: 500px;
 `;
 
 const SliderContainer = styled.div`
