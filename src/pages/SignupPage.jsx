@@ -10,6 +10,10 @@ import {
   ErrorText,
 } from "../pages/LoginPage";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+import IconCheckOff from "../assets/icon/icon-check-off.svg";
+// import IconCheckOn from "../assets/icon/icon-check-on.svg";
+import IconCheckBox from "../assets/icon/icon-check-box.svg";
 
 export default function SignupPage() {
   // const navigate = useNavigate();
@@ -24,7 +28,7 @@ export default function SignupPage() {
     login_type: "BUYER",
   });
 
-  // console.log(userInfo);
+  console.log(userInfo);
 
   const handleBuyerLogin = () => {
     setUserInfo({
@@ -46,15 +50,24 @@ export default function SignupPage() {
       ...prevState,
       [name]: value,
     }));
+
+    const phoneNumber = `${userInfo.phone_number1}-${userInfo.phone_number2}-${userInfo.phone_number3}`;
+    setUserInfo((prevState) => ({
+      ...prevState,
+      phone_number: phoneNumber,
+    }));
+
     setFailMsg("");
   };
+
+  // const handleSignup = () => {};
 
   const handleSubmit = (e) => {
     e.preventDefault();
   };
 
   return (
-    <Section>
+    <SectionStyle>
       <h1>
         <Link to="/">
           <img src={logo} alt="" />
@@ -78,16 +91,19 @@ export default function SignupPage() {
         </TypeChangeBtn>
       </TypeChangeWrap>
       <Form onSubmit={handleSubmit}>
-        <Input
-          title="아이디"
-          inputId="label-id"
-          border="1px solid var(--color-maingrey)"
-          borderRadius="5px"
-          value={userInfo.username}
-          name="username"
-          onChange={handleInputChange}
-        />
-        <Input
+        <IdContainer>
+          <Input
+            title="아이디"
+            inputId="label-id"
+            border="1px solid var(--color-maingrey)"
+            borderRadius="5px"
+            value={userInfo.username}
+            name="username"
+            onChange={handleInputChange}
+          />
+          <button>중복확인</button>
+        </IdContainer>
+        <InputWithIcon
           title="비밀번호"
           inputId="label-pw"
           border="1px solid var(--color-maingrey)"
@@ -96,16 +112,18 @@ export default function SignupPage() {
           value={userInfo.password}
           name="password"
           onChange={handleInputChange}
+          icon={IconCheckOff}
         />
-        <Input
+        <InputWithIcon
           title="비밀번호 재확인"
-          inputId="label-pw"
+          inputId="label-pw2"
           border="1px solid var(--color-maingrey)"
           borderRadius="5px"
           type="password"
-          value={userInfo.password}
-          name="password"
+          value={userInfo.password2}
+          name="password2"
           onChange={handleInputChange}
+          icon={IconCheckOff}
         />
         <Input
           title="이름"
@@ -116,9 +134,130 @@ export default function SignupPage() {
           name="name"
           onChange={handleInputChange}
         />
+        <TelContainer>
+          <label htmlFor="label-tel1">휴대폰번호</label>
+          <select
+            id="label-tel1"
+            value={userInfo.phone_number1}
+            name="phone_number1"
+            onChange={handleInputChange}
+          >
+            <option value="010">010</option>
+            <option value="011">011</option>
+            <option value="016">016</option>
+            <option value="017">017</option>
+          </select>
+          <input
+            type="tel"
+            id="label-tel2"
+            value={userInfo.phone_number2}
+            name="phone_number2"
+            onChange={handleInputChange}
+          />
+          <input
+            type="tel"
+            id="label-tel3"
+            value={userInfo.phone_number3}
+            name="phone_number3"
+            onChange={handleInputChange}
+          />
+        </TelContainer>
         {failMsg && <ErrorText>{failMsg}</ErrorText>}
-        <Button type="submit">로그인</Button>
       </Form>
-    </Section>
+      <CheckBoxContainer>
+        <button>
+          <img src={IconCheckBox} alt="체크박스" />
+        </button>
+        <p>
+          호두샵의 <strong>이용약관</strong> 및{" "}
+          <strong>개인정보처리방침</strong>에 대한 내용을 확인하였고 동의합니다.
+        </p>
+      </CheckBoxContainer>
+      <Button type="submit">가입하기</Button>
+    </SectionStyle>
   );
 }
+
+const SectionStyle = styled(Section)`
+  p {
+    color: var(--color-grey);
+    width: 510px;
+    line-height: 20px;
+    strong {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+  }
+`;
+
+const IdContainer = styled.div`
+  label {
+    width: 550px;
+  }
+
+  input {
+    width: 346px;
+  }
+
+  display: flex;
+  align-items: top;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  button {
+    width: 122px;
+    height: 60px;
+    background: var(--color-green);
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+  }
+`;
+
+const InputWithIcon = styled(Input)`
+  position: relative;
+
+  ::before {
+    content: "";
+    position: absolute;
+    right: 15px;
+    bottom: -170%;
+    transform: translateY(100%);
+    background: url(${(props) => props.icon}) no-repeat center;
+    width: 28px;
+    height: 28px;
+  }
+`;
+
+const TelContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  label {
+    color: var(--color-grey);
+    font-size: 16px;
+    margin: 6px 0 12px 0;
+    width: 550px;
+  }
+  input,
+  select {
+    border: 1px solid var(--color-maingrey);
+    border-radius: 5px;
+    padding: 20px 0;
+    font-size: 16px;
+    width: 151px;
+  }
+
+  #label-tel1 {
+    text-align: center;
+  }
+
+  #label-tel1,
+  #label-tel2 {
+    margin-right: 12px;
+  }
+`;
+
+const CheckBoxContainer = styled.div`
+  display: flex;
+  gap: 10px;
+`;
