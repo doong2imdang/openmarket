@@ -27,7 +27,9 @@ export default function ProductList() {
       <UlStyle>
         {products.map((product) => (
           <li key={product.product_id}>
-            <img src={product.image} alt="판매상품" />
+            <button>
+              <img src={product.image} alt="판매상품" />
+            </button>
             <p>{product.store_name}</p>
             <span>{product.product_name}</span>
             <strong>{product.price.toLocaleString()}원</strong>
@@ -65,6 +67,7 @@ const UlStyle = styled.ul`
     span {
       font-size: 22px;
       padding-bottom: 18px;
+      cursor: pointer;
     }
 
     strong {
