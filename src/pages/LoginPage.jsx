@@ -66,6 +66,9 @@ export default function LoginPage() {
     handleLogin(userInfo);
   };
 
+  console.log(userInfo.username);
+  console.log(userInfo.password);
+
   return (
     <Section>
       <h1>
@@ -105,7 +108,16 @@ export default function LoginPage() {
           onChange={handleInputChange}
         />
         {failMsg && <ErrorText>{failMsg}</ErrorText>}
-        <Button type="submit">로그인</Button>
+        <Button
+          type="submit"
+          disabled={
+            !userInfo.username ||
+            !userInfo.password ||
+            (failMsg && failMsg !== "")
+          }
+        >
+          로그인
+        </Button>
       </Form>
       <LinkWrap>
         <Link to="/signuppage">회원가입</Link>
@@ -164,10 +176,12 @@ export const Button = styled.button`
   width: 480px;
   color: #fff;
   font-size: 18px;
-  background-color: var(--color-green);
+  background-color: ${(props) =>
+    props.disabled ? "var(--color-maingrey)" : "var(--color-green)"};
   padding: 19px 0;
   border-radius: 5px;
   margin-top: 33px;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
 `;
 
 export const ErrorText = styled.p`
