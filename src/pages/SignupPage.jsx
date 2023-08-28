@@ -14,11 +14,13 @@ import styled from "styled-components";
 import IconCheckOff from "../assets/icon/icon-check-off.svg";
 // import IconCheckOn from "../assets/icon/icon-check-on.svg";
 import IconCheckBox from "../assets/icon/icon-check-box.svg";
+import IconCheck from "../assets/icon/icon-check-fill.svg";
 
 export default function SignupPage() {
   // const navigate = useNavigate();
   // const URL = "https://openmarket.weniv.co.kr";
   const [failMsg, setFailMsg] = useState("");
+  const [checked, setChecked] = useState(false);
   const [userInfo, setUserInfo] = useState({
     username: "",
     password: "",
@@ -29,6 +31,10 @@ export default function SignupPage() {
   });
 
   console.log(userInfo);
+
+  const handleCheckBoxClick = () => {
+    setChecked(!checked);
+  };
 
   const handleBuyerLogin = () => {
     setUserInfo({
@@ -153,6 +159,7 @@ export default function SignupPage() {
             value={userInfo.phone_number2}
             name="phone_number2"
             onChange={handleInputChange}
+            maxLength="4"
           />
           <input
             type="tel"
@@ -160,13 +167,14 @@ export default function SignupPage() {
             value={userInfo.phone_number3}
             name="phone_number3"
             onChange={handleInputChange}
+            maxLength="4"
           />
         </TelContainer>
         {failMsg && <ErrorText>{failMsg}</ErrorText>}
       </Form>
       <CheckBoxContainer>
-        <button>
-          <img src={IconCheckBox} alt="체크박스" />
+        <button onClick={handleCheckBoxClick}>
+          <img src={checked ? IconCheck : IconCheckBox} alt="체크박스" />
         </button>
         <p>
           호두샵의 <strong>이용약관</strong> 및{" "}
@@ -187,6 +195,15 @@ const SectionStyle = styled(Section)`
       font-weight: bold;
       text-decoration: underline;
     }
+  }
+
+  input {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  input:focus {
+    outline: 1px solid var(--color-green);
   }
 `;
 
@@ -216,6 +233,7 @@ const IdContainer = styled.div`
 
 const InputWithIcon = styled(Input)`
   position: relative;
+  padding-right: 50px;
 
   ::before {
     content: "";
@@ -242,9 +260,13 @@ const TelContainer = styled.div`
   select {
     border: 1px solid var(--color-maingrey);
     border-radius: 5px;
-    padding: 20px 0;
+    padding: 20px 10px;
     font-size: 16px;
     width: 151px;
+
+    &:focus {
+      outline: 1px solid var(--color-green);
+    }
   }
 
   #label-tel1 {
