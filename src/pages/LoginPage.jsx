@@ -3,9 +3,14 @@ import Input from "../components/Input";
 import styled from "styled-components";
 import logo from "../assets/logo/Logo-hodu-l.svg";
 import { Link, useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { loginState } from "../atom/loginAtom";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
+
   const URL = "https://openmarket.weniv.co.kr";
   const [failMsg, setFailMsg] = useState("");
   const [userInfo, setUserInfo] = useState({
@@ -52,6 +57,7 @@ export default function LoginPage() {
       console.log(res);
 
       if (response.ok) {
+        setIsLogin(true);
         navigate("/");
       } else {
         setFailMsg("아이디 또는 비밀번호가 일치하지 않습니다.");
