@@ -181,12 +181,17 @@ export default function SignupPage() {
           <strong>개인정보처리방침</strong>에 대한 내용을 확인하였고 동의합니다.
         </p>
       </CheckBoxContainer>
-      <Button type="submit">가입하기</Button>
+      <Button type="submit" className="btn-signup">
+        가입하기
+      </Button>
     </SectionStyle>
   );
 }
 
 const SectionStyle = styled(Section)`
+  h1 {
+    margin-top: -25px;
+  }
   p {
     color: var(--color-grey);
     width: 510px;
@@ -204,6 +209,10 @@ const SectionStyle = styled(Section)`
 
   input:focus {
     outline: 1px solid var(--color-green);
+  }
+
+  .btn-signup {
+    margin-top: 0;
   }
 `;
 
@@ -244,6 +253,10 @@ const InputWithIcon = styled(Input)`
     background: url(${(props) => props.icon}) no-repeat center;
     width: 28px;
     height: 28px;
+  }
+
+  &:nth-child(5) {
+    margin-bottom: 50px;
   }
 `;
 
