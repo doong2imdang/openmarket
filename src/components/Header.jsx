@@ -6,8 +6,12 @@ import search from "../assets/icon/search.svg";
 import { Link } from "react-router-dom";
 import Input from "../components/Input";
 import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../atom/loginAtom";
 
 export default function Header() {
+  const isLogin = useRecoilValue(loginState);
+
   return (
     <HeaderStyle>
       <Search>
@@ -28,9 +32,9 @@ export default function Header() {
           <img src={shoppingcart} alt="" />
           <p>장바구니</p>
         </Link>
-        <Link to="/mypage">
+        <Link to={isLogin ? "/mypage" : "/loginpage"}>
           <img src={user} alt="" />
-          <p>마이페이지</p>
+          <p>{isLogin ? "마이페이지" : "로그인"}</p>
         </Link>
       </NavLinks>
     </HeaderStyle>
