@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export default function ProductList() {
   const URL = "https://openmarket.weniv.co.kr";
@@ -27,11 +28,13 @@ export default function ProductList() {
       <UlStyle>
         {products.map((product) => (
           <li key={product.product_id}>
-            <button>
+            <Link to={`/products/${product.product_id}`}>
               <img src={product.image} alt="판매상품" />
-            </button>
+            </Link>
             <p>{product.store_name}</p>
-            <span>{product.product_name}</span>
+            <Link to={`/products/${product.product_id}`}>
+              <span>{product.product_name}</span>
+            </Link>
             <strong>{product.price.toLocaleString()}원</strong>
           </li>
         ))}
@@ -53,6 +56,7 @@ const UlStyle = styled.ul`
 
     img {
       max-width: 380px;
+      min-height: 380px;
       border: 1px solid var(--color-lightgrey);
       border-radius: 10px;
       box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
