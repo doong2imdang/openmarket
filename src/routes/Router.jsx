@@ -4,6 +4,7 @@ import LoginPage from "../pages/LoginPage";
 import HomePage from "../pages/HomePage";
 import SignupPage from "../pages/SignupPage";
 import ShoppingCartPage from "../pages/ShoppingCartPage";
+import ProductDetailPage from "../pages/ProductDetailPage";
 import MyPage from "../pages/MyPage";
 
 export default function Router() {
@@ -13,6 +14,7 @@ export default function Router() {
       <Route path="/loginpage" element={<LoginPage />} />
       <Route path="/signuppage" element={<SignupPage />} />
       <Route path="/shoppingcartpage" element={<ShoppingCartPage />} />
+      <Route path="/products/:product_id" element={<ProductDetailPage />} />
       <Route path="/mypage" element={<MyPage />} />
     </Routes>
   );
