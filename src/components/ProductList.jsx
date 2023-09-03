@@ -68,10 +68,12 @@ const UlStyle = styled.ul`
       padding: 18px 0;
     }
 
-    span {
-      font-size: 22px;
+    a:nth-child(3) {
       padding-bottom: 18px;
-      cursor: pointer;
+      span {
+        font-size: 22px;
+        cursor: pointer;
+      }
     }
 
     strong {
