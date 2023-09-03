@@ -132,11 +132,8 @@ const ProductDetailDesc = styled.div`
 
 const ProductCount = styled.div`
   display: flex;
-  gap: 30px;
   align-items: center;
   margin: 55px 0 70px 0;
-  border: 1px solid var(--color-maingrey);
-  border-radius: 5px;
   button {
     width: 60px;
     height: 60px;
@@ -163,16 +160,24 @@ const ProductCount = styled.div`
   }
 
   .btn-minus {
-    border-right: 1px solid var(--color-maingrey);
+    border: 1px solid var(--color-maingrey);
+    border-radius: 5px 0 0 5px;
   }
 
   .btn-plus {
-    border-left: 1px solid var(--color-maingrey);
+    border: 1px solid var(--color-maingrey);
+    border-radius: 0 5px 5px 0;
   }
 
   p {
+    width: 60px;
+    height: 60px;
     font-size: 18px;
+    line-height: 60px;
+    text-align: center;
     color: inherit;
+    border-top: 1px solid var(--color-maingrey);
+    border-bottom: 1px solid var(--color-maingrey);
   }
 `;
 
