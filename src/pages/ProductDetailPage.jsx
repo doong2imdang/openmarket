@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
+import styled from "styled-components";
+import MinusLine from "../assets/icon/icon-minus-line.svg";
+import PlusLine from "../assets/icon/icon-plus-line.svg";
 
 export default function ProductDetailPage() {
   const URL = "https://openmarket.weniv.co.kr";
@@ -47,19 +50,134 @@ export default function ProductDetailPage() {
         ) : error ? (
           <div>{error}</div>
         ) : product ? (
-          <div>
-            <h1>{product.product_name}</h1>
-            <img src={product.image} alt={product.product_name} />
-            <p>가격: {product.price}원</p>
-            <p>배송 방법: {product.shipping_method}</p>
-            <p>배송 비용: {product.shipping_fee}원</p>
-            <p>재고: {product.stock}개</p>
-            <p>상품 정보: {product.products_info}</p>
-            <p>판매자: {product.seller}</p>
-            <p>판매처: {product.store_name}</p>
-          </div>
+          <ProductDetailContainer>
+            <ProductDetailImg>
+              <img src={product.image} alt={product.product_name} />
+            </ProductDetailImg>
+            <ProductDetailDesc>
+              <p>{product.store_name}</p>
+              <h2>{product.product_name}</h2>
+              <span>
+                <strong>{product.price.toLocaleString()}</strong>원
+              </span>
+              <p className="delivery">택배배송 / 무료배송</p>
+              <ProductCount>
+                <button className="btn-minus">
+                  <img src={MinusLine} alt="" />
+                </button>
+                <p>1</p>
+                <button className="btn-plus">
+                  <img src={PlusLine} alt="" />
+                </button>
+              </ProductCount>
+              <TotalPrice>
+                <p>총 상품 금액</p>
+                <p>총 수량 1개</p>
+                <span>|</span>
+                <p>
+                  <strong>17500</strong>원
+                </p>
+              </TotalPrice>
+              <PurchaseOrCart>
+                <button>바로 구매</button>
+                <button>장바구니</button>
+              </PurchaseOrCart>
+            </ProductDetailDesc>
+          </ProductDetailContainer>
         ) : null}
       </div>
     </>
   );
 }
+
+const ProductDetailContainer = styled.div`
+  padding: 75px 0;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+`;
+
+const ProductDetailImg = styled.div`
+  img {
+    max-width: 600px;
+    min-height: 600px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  }
+`;
+
+const ProductDetailDesc = styled.div`
+  position: relative;
+  p {
+    font-size: 18px;
+    color: var(--color-grey);
+  }
+
+  h2 {
+    font-size: 36px;
+    padding: 15px 0 20px 0;
+  }
+
+  span {
+    font-size: 18px;
+    strong {
+      font-size: 36px;
+      font-weight: bold;
+    }
+  }
+
+  .delivery {
+    padding-top: 140px;
+  }
+`;
+
+const ProductCount = styled.div`
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  margin: 55px 0 70px 0;
+  border: 1px solid var(--color-maingrey);
+  border-radius: 5px;
+  button {
+    width: 60px;
+    height: 60px;
+
+    ::before {
+      content: "";
+      position: absolute;
+      min-width: 630px;
+      height: 2px;
+      background-color: var(--color-maingrey);
+      left: 0;
+      top: 310px;
+    }
+
+    ::after {
+      content: "";
+      position: absolute;
+      min-width: 630px;
+      height: 2px;
+      background-color: var(--color-maingrey);
+      left: 0;
+      top: 425px;
+    }
+  }
+
+  .btn-minus {
+    border-right: 1px solid var(--color-maingrey);
+  }
+
+  .btn-plus {
+    border-left: 1px solid var(--color-maingrey);
+  }
+
+  p {
+    font-size: 18px;
+    color: inherit;
+  }
+`;
+
+const TotalPrice = styled.div`
+  display: flex;
+`;
+
+const PurchaseOrCart = styled.div``;
