@@ -47,6 +47,7 @@ const HeaderStyle = styled.header`
   justify-content: space-around;
   padding: 22px 0;
   min-height: 90px;
+  box-shadow: 0px 4px 5px 0px #0000001a;
 `;
 
 const SearchInput = styled(Input)`
