@@ -12,6 +12,7 @@ export default function ProductDetailPage() {
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [count, setCount] = useState(1);
 
   useEffect(() => {
     if (product_id) {
@@ -41,6 +42,16 @@ export default function ProductDetailPage() {
     }
   }, [product_id]);
 
+  const handlePlusButton = () => {
+    setCount(count + 1);
+  };
+
+  const handleMinusButton = () => {
+    if (count > 1) {
+      setCount(count - 1);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -62,11 +73,11 @@ export default function ProductDetailPage() {
               </span>
               <p className="delivery">택배배송 / 무료배송</p>
               <ProductCount>
-                <button className="btn-minus">
+                <button className="btn-minus" onClick={handleMinusButton}>
                   <img src={MinusLine} alt="" />
                 </button>
-                <p>1</p>
-                <button className="btn-plus">
+                <p>{count}</p>
+                <button className="btn-plus" onClick={handlePlusButton}>
                   <img src={PlusLine} alt="" />
                 </button>
               </ProductCount>
