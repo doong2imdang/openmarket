@@ -24,7 +24,6 @@ export default function ProductDetailPage() {
           return response.json();
         })
         .then((data) => {
-          console.log(data);
           setProduct(data);
           setError(null);
         })
@@ -52,6 +51,8 @@ export default function ProductDetailPage() {
     }
   };
 
+  const totalPrcie = product && product.price ? product.price * count : 0;
+
   return (
     <>
       <Header />
@@ -61,40 +62,50 @@ export default function ProductDetailPage() {
         ) : error ? (
           <div>{error}</div>
         ) : product ? (
-          <ProductDetailContainer>
-            <ProductDetailImg>
-              <img src={product.image} alt={product.product_name} />
-            </ProductDetailImg>
-            <ProductDetailDesc>
-              <p>{product.store_name}</p>
-              <h2>{product.product_name}</h2>
-              <span>
-                <strong>{product.price.toLocaleString()}</strong>원
-              </span>
-              <p className="delivery">택배배송 / 무료배송</p>
-              <ProductCount>
-                <button className="btn-minus" onClick={handleMinusButton}>
-                  <img src={MinusLine} alt="" />
-                </button>
-                <p>{count}</p>
-                <button className="btn-plus" onClick={handlePlusButton}>
-                  <img src={PlusLine} alt="" />
-                </button>
-              </ProductCount>
-              <TotalPrice>
-                <p>총 상품 금액</p>
-                <p>총 수량 1개</p>
-                <span>|</span>
-                <p>
-                  <strong>17500</strong>원
-                </p>
-              </TotalPrice>
-              <PurchaseOrCart>
-                <button>바로 구매</button>
-                <button>장바구니</button>
-              </PurchaseOrCart>
-            </ProductDetailDesc>
-          </ProductDetailContainer>
+          <>
+            <ProductDetailContainer>
+              <ProductDetailImg>
+                <img src={product.image} alt={product.product_name} />
+              </ProductDetailImg>
+              <ProductDetailDesc>
+                <p>{product.store_name}</p>
+                <h2>{product.product_name}</h2>
+                <span>
+                  <strong>{product.price.toLocaleString()}</strong>원
+                </span>
+                <p className="delivery">택배배송 / 무료배송</p>
+                <ProductCount>
+                  <button className="btn-minus" onClick={handleMinusButton}>
+                    <img src={MinusLine} alt="" />
+                  </button>
+                  <p>{count}</p>
+                  <button className="btn-plus" onClick={handlePlusButton}>
+                    <img src={PlusLine} alt="" />
+                  </button>
+                </ProductCount>
+                <TotalPrice>
+                  <p className="totalProductPrice">총 상품 금액</p>
+                  <p className="totalCount">
+                    총 수량 <strong>{count}</strong>개
+                  </p>
+                  <span>|</span>
+                  <p className="totalPrice">
+                    <strong>{totalPrcie.toLocaleString()}</strong>원
+                  </p>
+                </TotalPrice>
+                <PurchaseOrCart>
+                  <button className="btn-purchase">바로 구매</button>
+                  <button className="btn-cart">장바구니</button>
+                </PurchaseOrCart>
+              </ProductDetailDesc>
+            </ProductDetailContainer>
+            <ProductInfo>
+              <button>버튼</button>
+              <button>리뷰</button>
+              <button>Q&A</button>
+              <button>반품/교환정보</button>
+            </ProductInfo>
+          </>
         ) : null}
       </div>
     </>
@@ -194,6 +205,71 @@ const ProductCount = styled.div`
 
 const TotalPrice = styled.div`
   display: flex;
+  gap: 15px;
+  margin-bottom: 35px;
+  align-items: center;
+  .totalProductPrice {
+    padding-right: 250px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .totalCount {
+    font-size: 18px;
+    strong {
+      color: var(--color-green);
+      font-weight: bold;
+    }
+  }
+
+  span {
+    color: var(--color-maingrey);
+  }
+
+  .totalPrice {
+    color: var(--color-green);
+    font-size: 18px;
+    strong {
+      font-size: 36px;
+      font-weight: bold;
+    }
+  }
 `;
 
-const PurchaseOrCart = styled.div``;
+const PurchaseOrCart = styled.div`
+  display: flex;
+  gap: 16px;
+  button {
+    font-size: 18px;
+    height: 60px;
+    color: #ffffff;
+    border-radius: 5px;
+  }
+
+  .btn-purchase {
+    background-color: var(--color-green);
+    width: 416px;
+  }
+
+  .btn-cart {
+    background-color: var(--color-grey);
+    width: 200px;
+  }
+`;
+
+const ProductInfo = styled.div`
+  padding-bottom: 80px;
+  display: flex;
+  justify-content: center;
+  button {
+    font-size: 18px;
+    color: var(--color-grey);
+    border-bottom: 6px solid #e0e0e0;
+    padding: 80px 130px 20px 130px;
+
+    &:focus {
+      border-bottom: 6px solid var(--color-green);
+      color: var(--color-green);
+    }
+  }
+`;
