@@ -99,8 +99,8 @@ const ProductDetailContainer = styled.div`
 
 const ProductDetailImg = styled.div`
   img {
-    max-width: 600px;
-    min-height: 600px;
+    width: 600px;
+    height: 600px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   }
 `;
@@ -173,7 +173,7 @@ const ProductCount = styled.div`
     width: 60px;
     height: 60px;
     font-size: 18px;
-    line-height: 60px;
+    line-height: 50px;
     text-align: center;
     color: inherit;
     border-top: 1px solid var(--color-maingrey);
