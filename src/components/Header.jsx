@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../assets/logo/Logo-hodu-s.svg";
 import shoppingcart from "../assets/icon/icon-shopping-cart.svg";
+import shoppingcartfill from "../assets/icon/icon-shopping-cart-focus.svg";
+import userfill from "../assets/icon/icon-user-focus.svg";
 import user from "../assets/icon/icon-user.svg";
 import search from "../assets/icon/search.svg";
 import { Link } from "react-router-dom";
@@ -11,6 +13,24 @@ import { loginState } from "../atom/loginAtom";
 
 export default function Header() {
   const isLogin = useRecoilValue(loginState);
+  const [shoppingCartFocus, setShoppingCartFocus] = useState(false);
+  const [userIconFocus, setUserIconFocus] = useState(false);
+
+  const handleShoppingCartFoucus = () => {
+    setShoppingCartFocus(true);
+  };
+
+  const handleShoppingCartBlur = () => {
+    setShoppingCartFocus(false);
+  };
+
+  const handleUserIconFocus = () => {
+    setUserIconFocus(true);
+  };
+
+  const handleUserIconBlur = () => {
+    setUserIconFocus(false);
+  };
 
   return (
     <HeaderStyle>
@@ -28,13 +48,38 @@ export default function Header() {
         </button>
       </Search>
       <NavLinks>
-        <Link to="/shoppingcartpage">
-          <img src={shoppingcart} alt="" />
-          <p>장바구니</p>
+        <Link
+          to="/shoppingcartpage"
+          onFocus={handleShoppingCartFoucus}
+          onBlur={handleShoppingCartBlur}
+        >
+          <img
+            src={shoppingCartFocus ? shoppingcartfill : shoppingcart}
+            alt=""
+          />
+          <p
+            style={{
+              color: shoppingCartFocus
+                ? "var(--color-green)"
+                : "var(--color-grey)",
+            }}
+          >
+            장바구니
+          </p>
         </Link>
-        <Link to={isLogin ? "/mypage" : "/loginpage"}>
-          <img src={user} alt="" />
-          <p>{isLogin ? "마이페이지" : "로그인"}</p>
+        <Link
+          to={isLogin ? "/mypage" : "/loginpage"}
+          onFocus={handleUserIconFocus}
+          onBlur={handleUserIconBlur}
+        >
+          <img src={userIconFocus ? userfill : user} alt="" />
+          <p
+            style={{
+              color: userIconFocus ? "var(--color-green)" : "var(--color-grey)",
+            }}
+          >
+            {isLogin ? "마이페이지" : "로그인"}
+          </p>
         </Link>
       </NavLinks>
     </HeaderStyle>
@@ -77,6 +122,5 @@ const NavLinks = styled.div`
 
   p {
     font-size: 12px;
-    color: var(--color-grey);
   }
 `;
