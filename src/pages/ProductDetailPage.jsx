@@ -100,10 +100,12 @@ export default function ProductDetailPage() {
               </ProductDetailDesc>
             </ProductDetailContainer>
             <ProductInfo>
-              <button>버튼</button>
-              <button>리뷰</button>
-              <button>Q&A</button>
-              <button>반품/교환정보</button>
+              <button autoFocus type="button">
+                버튼
+              </button>
+              <button type="button">리뷰</button>
+              <button type="button">Q&A</button>
+              <button type="button">반품/교환정보</button>
             </ProductInfo>
           </>
         ) : null}
@@ -266,6 +268,7 @@ const ProductInfo = styled.div`
     color: var(--color-grey);
     border-bottom: 6px solid #e0e0e0;
     padding: 80px 130px 20px 130px;
+    outline: none;
 
     &:focus {
       border-bottom: 6px solid var(--color-green);
