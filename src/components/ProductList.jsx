@@ -55,8 +55,8 @@ const UlStyle = styled.ul`
     flex-direction: column;
 
     img {
-      max-width: 380px;
-      min-height: 380px;
+      width: 380px;
+      height: 380px;
       border: 1px solid var(--color-lightgrey);
       border-radius: 10px;
       box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
