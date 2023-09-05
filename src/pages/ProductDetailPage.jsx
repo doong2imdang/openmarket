@@ -100,12 +100,20 @@ export default function ProductDetailPage() {
               </ProductDetailDesc>
             </ProductDetailContainer>
             <ProductInfo>
-              <button autoFocus type="button">
-                버튼
-              </button>
-              <button type="button">리뷰</button>
-              <button type="button">Q&A</button>
-              <button type="button">반품/교환정보</button>
+              <li>
+                <button autoFocus type="button">
+                  버튼
+                </button>
+              </li>
+              <li>
+                <button type="button">리뷰</button>
+              </li>
+              <li>
+                <button type="button">Q&A</button>
+              </li>
+              <li>
+                <button type="button">반품/교환정보</button>
+              </li>
             </ProductInfo>
           </>
         ) : null}
@@ -259,12 +267,18 @@ const PurchaseOrCart = styled.div`
   }
 `;
 
-const ProductInfo = styled.div`
+const ProductInfo = styled.ul`
   padding-bottom: 80px;
   display: flex;
   justify-content: center;
+
+  li {
+    display: block;
+  }
+
   button {
     font-size: 18px;
+    height: 130px;
     color: var(--color-grey);
     border-bottom: 6px solid #e0e0e0;
     padding: 80px 130px 20px 130px;
