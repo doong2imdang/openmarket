@@ -42,7 +42,9 @@ export default function ProductDetailPage() {
   }, [product_id]);
 
   const handlePlusButton = () => {
-    setCount(count + 1);
+    if (product.stock > count) {
+      setCount(count + 1);
+    }
   };
 
   const handleMinusButton = () => {
