@@ -5,6 +5,7 @@ import checkboxfill from "../assets/icon/cart-check-box-Fill.svg";
 import MinusLine from "../assets/icon/icon-minus-line.svg";
 import PlusLine from "../assets/icon/icon-plus-line.svg";
 import DeleteBtn from "../assets/icon/icon-delete.svg";
+import { Link } from "react-router-dom";
 
 export default function CardItem({ item }) {
   const URL = "https://openmarket.weniv.co.kr";
@@ -77,12 +78,14 @@ export default function CardItem({ item }) {
             />
           </CheckBox>
           <ProductInfo className="product-info">
-            <ProductImage>
+            <ProductImage to={`/products/${item.product_id}`}>
               <img src={productInfo.image} alt="" />
             </ProductImage>
             <ProductDesc>
               <p className="storename">{productInfo.storeName}</p>
-              <p className="productname">{productInfo.productName}</p>
+              <Link to={`/products/${item.product_id}`}>
+                <p className="productname">{productInfo.productName}</p>
+              </Link>
               <p className="price">{formattedPrice}원</p>
               <p className="deliverymethod">택배배송 / 무료배송</p>
             </ProductDesc>
@@ -131,7 +134,7 @@ const ProductInfo = styled.div`
   gap: 40px;
 `;
 
-const ProductImage = styled.button`
+const ProductImage = styled(Link)`
   border: 1px solid #e0e0e0;
   border-radius: 10px;
 
