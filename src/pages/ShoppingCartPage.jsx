@@ -5,14 +5,12 @@ import checkbox from "../assets/icon/cart-check-box.svg";
 import checkboxfill from "../assets/icon/cart-check-box-Fill.svg";
 import { useRecoilValue } from "recoil";
 import { userToken } from "../atom/loginAtom";
-import { productImage } from "../atom/productAtom";
+import CartItem from "../components/CartItem";
 
 export default function ShoppingCartPage() {
   const URL = "https://openmarket.weniv.co.kr";
   const [isChecked, setIsChecked] = useState(false);
   const [cartItems, setCartItems] = useState([]);
-  const authImage = useRecoilValue(productImage);
-  console.log(authImage);
 
   const authToken = useRecoilValue(userToken);
 
@@ -20,7 +18,7 @@ export default function ShoppingCartPage() {
     setIsChecked(!isChecked);
   };
 
-  // console.log(authToken);
+  console.log(authToken);
 
   useEffect(() => {
     fetch(`${URL}/cart/`, {
@@ -67,9 +65,8 @@ export default function ShoppingCartPage() {
           </EmptyShoppingCart>
         ) : (
           <div>
-            <img src={authImage} alt="" />
             {cartItems.map((item) => (
-              <p>{item.quantity}</p>
+              <CartItem key={item.product_id} item={item} />
             ))}
           </div>
         )}
