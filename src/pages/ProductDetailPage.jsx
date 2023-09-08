@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import styled from "styled-components";
 import MinusLine from "../assets/icon/icon-minus-line.svg";
@@ -8,6 +8,7 @@ import PlusLine from "../assets/icon/icon-plus-line.svg";
 export default function ProductDetailPage() {
   const URL = "https://openmarket.weniv.co.kr";
   const { product_id } = useParams();
+  const navigate = useNavigate();
 
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
@@ -53,6 +54,10 @@ export default function ProductDetailPage() {
     }
   };
 
+  const handleBuyNow = () => {
+    navigate("/buynow");
+  };
+
   const totalPrcie = product && product.price ? product.price * count : 0;
 
   return (
@@ -96,7 +101,9 @@ export default function ProductDetailPage() {
                   </p>
                 </TotalPrice>
                 <PurchaseOrCart>
-                  <button className="btn-purchase">바로 구매</button>
+                  <button className="btn-purchase" onClick={handleBuyNow}>
+                    바로 구매
+                  </button>
                   <button className="btn-cart">장바구니</button>
                 </PurchaseOrCart>
               </ProductDetailDesc>
