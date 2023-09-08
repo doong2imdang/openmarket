@@ -5,11 +5,18 @@ import styled from "styled-components";
 import MinusLine from "../assets/icon/icon-minus-line.svg";
 import PlusLine from "../assets/icon/icon-plus-line.svg";
 import Modal from "../components/Modal";
+import { useRecoilValue, useRecoilState } from "recoil";
+import { userToken } from "../atom/loginAtom";
+import { productImage } from "../atom/productAtom";
 
 export default function ProductDetailPage() {
   const URL = "https://openmarket.weniv.co.kr";
   const { product_id } = useParams();
   const navigate = useNavigate();
+  const authToken = useRecoilValue(userToken);
+  const [authImage, setAuthImage] = useRecoilState(productImage);
+  console.log(authToken);
+  console.log(authImage);
 
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
@@ -30,6 +37,7 @@ export default function ProductDetailPage() {
         .then((data) => {
           setProduct(data);
           setError(null);
+          setAuthImage(data.image);
         })
         .catch((err) => {
           console.error(err);
