@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import styled from "styled-components";
 import MinusLine from "../assets/icon/icon-minus-line.svg";
 import PlusLine from "../assets/icon/icon-plus-line.svg";
+import Modal from "../components/Modal";
 
 export default function ProductDetailPage() {
   const URL = "https://openmarket.weniv.co.kr";
@@ -14,6 +15,8 @@ export default function ProductDetailPage() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [count, setCount] = useState(1);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (product_id) {
@@ -60,6 +63,47 @@ export default function ProductDetailPage() {
 
   const totalPrcie = product && product.price ? product.price * count : 0;
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const addToCart = () => {
+    const requestData = {
+      product_id: product_id,
+      quantity: count,
+      check: false,
+    };
+
+    fetch(`${URL}/cart/`, {
+      method: "POST",
+      headers: {
+        Authorization: `JWT ${authToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("제품을 장바구니에 추가하는데 실패했습니다.");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.check === false) {
+          openModal();
+        } else {
+          console.log("제품이 장바구니에 성공적으로 추가되었습니다.");
+        }
+      })
+      .catch((error) => {
+        console.error("제품을 장바구니에 추가하는 중 오류발생");
+      });
+  };
+
   return (
     <>
       <Header />
@@ -104,7 +148,10 @@ export default function ProductDetailPage() {
                   <button className="btn-purchase" onClick={handleBuyNow}>
                     바로 구매
                   </button>
-                  <button className="btn-cart">장바구니</button>
+                  <button className="btn-cart" onClick={addToCart}>
+                    장바구니
+                  </button>
+                  {isModalOpen && <Modal closeModal={closeModal} />}
                 </PurchaseOrCart>
               </ProductDetailDesc>
             </ProductDetailContainer>
