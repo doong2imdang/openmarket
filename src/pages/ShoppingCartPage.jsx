@@ -97,6 +97,10 @@ export const UlStyle = styled.ul`
   li {
     text-align: center;
   }
+
+  img {
+    cursor: pointer;
+  }
 `;
 
 const EmptyShoppingCart = styled.div`
