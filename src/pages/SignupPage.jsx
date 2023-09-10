@@ -9,7 +9,7 @@ import {
   Button,
   ErrorText,
 } from "../pages/LoginPage";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import IconCheckOff from "../assets/icon/icon-check-off.svg";
 // import IconCheckOn from "../assets/icon/icon-check-on.svg";
@@ -17,8 +17,8 @@ import IconCheckBox from "../assets/icon/icon-check-box.svg";
 import IconCheck from "../assets/icon/icon-check-fill.svg";
 
 export default function SignupPage() {
-  // const navigate = useNavigate();
-  // const URL = "https://openmarket.weniv.co.kr";
+  const navigate = useNavigate();
+  const URL = "https://openmarket.weniv.co.kr";
   const [failMsg, setFailMsg] = useState("");
   const [checked, setChecked] = useState(false);
   const [userInfo, setUserInfo] = useState({
@@ -29,8 +29,6 @@ export default function SignupPage() {
     name: "",
     login_type: "BUYER",
   });
-
-  console.log(userInfo);
 
   const handleCheckBoxClick = () => {
     setChecked(!checked);
@@ -52,25 +50,55 @@ export default function SignupPage() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    let phoneNumber = userInfo.phone_number; // 기존 전화번호 값을 가져옵니다.
+
+    if (
+      name === "phone_number1" ||
+      name === "phone_number2" ||
+      name === "phone_number3"
+    ) {
+      // 전화번호 관련 필드가 변경된 경우, 새로운 전화번호를 생성합니다.
+      phoneNumber = `${userInfo.phone_number1}-${userInfo.phone_number2}-${userInfo.phone_number3}`;
+    }
+
     setUserInfo((prevState) => ({
       ...prevState,
       [name]: value,
-    }));
-
-    const phoneNumber = `${userInfo.phone_number1}-${userInfo.phone_number2}-${userInfo.phone_number3}`;
-    setUserInfo((prevState) => ({
-      ...prevState,
-      phone_number: phoneNumber,
+      phone_number: phoneNumber, // 새로운 전화번호 값을 설정합니다.
     }));
 
     setFailMsg("");
   };
 
-  // const handleSignup = () => {};
+  const handleSignup = async () => {
+    try {
+      const response = await fetch(URL + "/accounts/signup/", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(userInfo),
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("회원 가입 성공");
+        navigate("/loginpage");
+      } else {
+        console.error("회원가입 실패:", data.error);
+      }
+    } catch (error) {
+      console.log("회원가입 요청 실패:", error);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    handleSignup(userInfo);
   };
+
+  console.log(userInfo);
 
   return (
     <SectionStyle>
@@ -171,6 +199,9 @@ export default function SignupPage() {
           />
         </TelContainer>
         {failMsg && <ErrorText>{failMsg}</ErrorText>}
+        <ButtonStyle type="submit" className="btn-signup">
+          가입하기
+        </ButtonStyle>
       </Form>
       <CheckBoxContainer>
         <button onClick={handleCheckBoxClick}>
@@ -181,9 +212,6 @@ export default function SignupPage() {
           <strong>개인정보처리방침</strong>에 대한 내용을 확인하였고 동의합니다.
         </p>
       </CheckBoxContainer>
-      <Button type="submit" className="btn-signup">
-        가입하기
-      </Button>
     </SectionStyle>
   );
 }
@@ -194,7 +222,7 @@ const SectionStyle = styled(Section)`
   }
   p {
     color: var(--color-grey);
-    width: 510px;
+    width: 460px;
     line-height: 20px;
     strong {
       font-weight: bold;
@@ -211,8 +239,8 @@ const SectionStyle = styled(Section)`
     outline: 1px solid var(--color-green);
   }
 
-  .btn-signup {
-    margin-top: 0;
+  form {
+    position: relative;
   }
 `;
 
@@ -266,7 +294,7 @@ const TelContainer = styled.div`
   label {
     color: var(--color-grey);
     font-size: 16px;
-    margin: 6px 0 12px 0;
+    margin: 10px 0 12px 0;
     width: 550px;
   }
   input,
@@ -276,20 +304,23 @@ const TelContainer = styled.div`
     padding: 20px 10px;
     font-size: 16px;
     width: 151px;
+    text-align: center;
 
     &:focus {
       outline: 1px solid var(--color-green);
     }
   }
 
-  #label-tel1 {
-    text-align: center;
-  }
-
   #label-tel1,
   #label-tel2 {
     margin-right: 12px;
   }
+`;
+
+const ButtonStyle = styled(Button)`
+  position: absolute;
+  bottom: 0;
+  transform: translateY(175px);
 `;
 
 const CheckBoxContainer = styled.div`
