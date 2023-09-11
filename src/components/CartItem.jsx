@@ -7,16 +7,20 @@ import PlusLine from "../assets/icon/icon-plus-line.svg";
 import DeleteBtn from "../assets/icon/icon-delete.svg";
 import { Link } from "react-router-dom";
 
-export default function CardItem({ item }) {
+export default function CardItem({ item, isChecked }) {
   const URL = "https://openmarket.weniv.co.kr";
   const [products, setProducts] = useState([]);
   const [productInfo, setProductInfo] = useState({});
-  const [isChecked, setIsChecked] = useState(false);
+  const [isCheckedBox, setIsCheckedBox] = useState(isChecked);
   const [count, setCount] = useState(item.quantity);
 
   const handleCheckboxClick = () => {
-    setIsChecked(!isChecked);
+    setIsCheckedBox(!isCheckedBox);
   };
+
+  useEffect(() => {
+    setIsCheckedBox(isChecked);
+  }, [isChecked]);
 
   useEffect(() => {
     const handleGetProducts = async () => {
@@ -72,7 +76,7 @@ export default function CardItem({ item }) {
         <CartContainer>
           <CheckBox>
             <img
-              src={isChecked ? checkboxfill : checkbox}
+              src={isCheckedBox ? checkboxfill : checkbox}
               alt="전체선택박스"
               onClick={handleCheckboxClick}
             />
