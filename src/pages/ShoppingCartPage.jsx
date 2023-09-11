@@ -66,7 +66,11 @@ export default function ShoppingCartPage() {
         ) : (
           <div>
             {cartItems.map((item) => (
-              <CartItem key={item.product_id} item={item} />
+              <CartItem
+                key={item.product_id}
+                item={item}
+                isChecked={isChecked}
+              />
             ))}
           </div>
         )}
