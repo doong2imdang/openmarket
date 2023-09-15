@@ -195,7 +195,7 @@ const ProductCount = styled.div`
     width: 60px;
     height: 60px;
     font-size: 18px;
-    line-height: 50px;
+    line-height: 55px;
     text-align: center;
     color: inherit;
     border-top: 1px solid var(--color-maingrey);
