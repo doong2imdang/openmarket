@@ -7,7 +7,7 @@ import PlusLine from "../assets/icon/icon-plus-line.svg";
 import DeleteBtn from "../assets/icon/icon-delete.svg";
 import { Link } from "react-router-dom";
 
-export default function CardItem({ item, isChecked, onProductInfoChange }) {
+export default function CardItem({ item, isChecked }) {
   const URL = "https://openmarket.weniv.co.kr";
   const [products, setProducts] = useState([]);
   const [productInfo, setProductInfo] = useState({});
@@ -69,14 +69,6 @@ export default function CardItem({ item, isChecked, onProductInfoChange }) {
   const totalPrice = productInfo.productPrice
     ? (productInfo.productPrice * item.quantity).toLocaleString()
     : "";
-
-  const sendProductInfo = () => {
-    const productInfo = {
-      price: productInfo.productPrice,
-      quantity: count,
-    };
-    onProductInfoChange(productInfo);
-  };
 
   return (
     <>

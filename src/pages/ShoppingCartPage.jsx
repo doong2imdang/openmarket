@@ -43,24 +43,6 @@ export default function ShoppingCartPage() {
       });
   }, []);
 
-  const cartItemInfoArray = [];
-
-  // CartItem 컴포넌트로부터 정보를 받는 콜백 함수
-  const handleProductInfoChange = (productInfo) => {
-    cartItemInfoArray.push(productInfo);
-  };
-
-  // ... (이전 코드)
-
-  // 총 상품금액 계산
-  const calculateTotalPrice = () => {
-    let totalPrice = 0;
-    cartItemInfoArray.forEach((productInfo) => {
-      totalPrice += productInfo.price * productInfo.quantity;
-    });
-    return totalPrice;
-  };
-
   return (
     <>
       <Header />
@@ -91,7 +73,6 @@ export default function ShoppingCartPage() {
                   key={item.product_id}
                   item={item}
                   isChecked={isChecked}
-                  onProductInfoChange={handleProductInfoChange}
                 />
               ))}
             </div>
@@ -99,7 +80,7 @@ export default function ShoppingCartPage() {
               <div>
                 <p>총 상품금액</p>
                 <strong>
-                  {calculateTotalPrice().toLocaleString()}
+                  46,500
                   <span>원</span>
                 </strong>
               </div>
