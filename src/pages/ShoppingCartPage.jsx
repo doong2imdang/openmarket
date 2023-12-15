@@ -13,6 +13,7 @@ export default function ShoppingCartPage() {
   const URL = "https://openmarket.weniv.co.kr";
   const [isChecked, setIsChecked] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [products, setProducts] = useState([]);
 
   const authToken = useRecoilValue(userToken);
 
@@ -21,7 +22,10 @@ export default function ShoppingCartPage() {
   };
 
   console.log(authToken);
+  console.log(products);
+  console.log(cartItems);
 
+  // 장바구니 목록 불러오는 fetch
   useEffect(() => {
     fetch(`${URL}/cart/`, {
       method: "GET",
@@ -42,6 +46,49 @@ export default function ShoppingCartPage() {
         console.error("장바구니 데이터를 불러오는 중 오류 발생");
       });
   }, []);
+
+  // 상품 전체 목록 불러오는 fetch
+  useEffect(() => {
+    const handleGetProducts = async () => {
+      try {
+        const response = await fetch(URL + "/products");
+
+        if (!response.ok) {
+          throw new Error("HTTP error");
+        }
+
+        const data = await response.json();
+        setProducts(data.results);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    handleGetProducts();
+  }, []);
+
+  // 동일한 product_id 가진 상품의 price만 출력
+  const sameProductPrice = cartItems.map((cartItem) => {
+    const matchingProducts = products.find(
+      (product) => cartItem.product_id === product.product_id
+    );
+
+    if (matchingProducts) {
+      const { price, shipping_fee } = matchingProducts;
+      return { price, shipping_fee };
+    } else {
+      return { price: 0, shipping_fee: 0 };
+    }
+  });
+  console.log(sameProductPrice);
+
+  const prices = sameProductPrice.map((item) => item.price);
+
+  const totalPrice = prices.reduce((a, c) => {
+    return a + c;
+  }, 0);
+
+  console.log(totalPrice);
 
   return (
     <>
@@ -80,7 +127,7 @@ export default function ShoppingCartPage() {
               <div>
                 <p>총 상품금액</p>
                 <strong>
-                  46,500
+                  {totalPrice.toLocaleString()}
                   <span>원</span>
                 </strong>
               </div>

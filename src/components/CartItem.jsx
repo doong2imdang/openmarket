@@ -18,6 +18,16 @@ export default function CardItem({ item, isChecked }) {
     setIsCheckedBox(!isCheckedBox);
   };
 
+  const handlePlusButton = () => {
+    setCount(count + 1);
+  };
+
+  const handleMinusButton = () => {
+    if (count > 1) {
+      setCount(count - 1);
+    }
+  };
+
   useEffect(() => {
     setIsCheckedBox(isChecked);
   }, [isChecked]);
@@ -51,16 +61,6 @@ export default function CardItem({ item, isChecked }) {
 
     handleGetProducts();
   }, []);
-
-  const handlePlusButton = () => {
-    setCount(count + 1);
-  };
-
-  const handleMinusButton = () => {
-    if (count > 1) {
-      setCount(count - 1);
-    }
-  };
 
   const formattedPrice = productInfo.productPrice
     ? productInfo.productPrice.toLocaleString()
