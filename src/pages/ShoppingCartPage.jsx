@@ -91,6 +91,12 @@ export default function ShoppingCartPage() {
 
   console.log(totalPrice);
 
+  const shippingFee = sameProductPrice.map((item) => item.shipping_fee);
+
+  const maxShippingFee = Math.max(...shippingFee);
+
+  console.log(maxShippingFee);
+
   return (
     <>
       <Header />
@@ -143,13 +149,15 @@ export default function ShoppingCartPage() {
               <div>
                 <p>배송비</p>
                 <strong>
-                  0<span>원</span>
+                  {maxShippingFee.toLocaleString()}
+                  <span>원</span>
                 </strong>
               </div>
               <div className="expectedTotalPrice">
                 <p>결제 예정 금액</p>
                 <strong>
-                  46,500<span>원</span>
+                  {(totalPrice + maxShippingFee).toLocaleString()}
+                  <span>원</span>
                 </strong>
               </div>
             </TotalPrice>
