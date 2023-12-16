@@ -75,14 +75,15 @@ export default function ShoppingCartPage() {
 
     if (matchingProducts) {
       const { price, shipping_fee } = matchingProducts;
-      return { price, shipping_fee };
+      const { quantity } = cartItem;
+      return { price, shipping_fee, quantity };
     } else {
-      return { price: 0, shipping_fee: 0 };
+      return { price: 0, shipping_fee: 0, quantity: 0 };
     }
   });
   console.log(sameProductPrice);
 
-  const prices = sameProductPrice.map((item) => item.price);
+  const prices = sameProductPrice.map((item) => item.price * item.quantity);
 
   const totalPrice = prices.reduce((a, c) => {
     return a + c;
