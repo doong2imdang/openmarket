@@ -5,9 +5,12 @@ import checkboxfill from "../assets/icon/cart-check-box-Fill.svg";
 import MinusLine from "../assets/icon/icon-minus-line.svg";
 import PlusLine from "../assets/icon/icon-plus-line.svg";
 import DeleteBtn from "../assets/icon/icon-delete.svg";
+import { useRecoilValue } from "recoil";
 import { Link } from "react-router-dom";
+import { userToken } from "../atom/loginAtom";
 
 export default function CardItem({ item, isChecked }) {
+  const authToken = useRecoilValue(userToken);
   const URL = "https://openmarket.weniv.co.kr";
   const [products, setProducts] = useState([]);
   const [productInfo, setProductInfo] = useState({});
@@ -20,11 +23,39 @@ export default function CardItem({ item, isChecked }) {
 
   const handlePlusButton = () => {
     setCount(count + 1);
+    updateCartItem(item.cart_item_id, count + 1, item.is_active);
   };
 
   const handleMinusButton = () => {
     if (count > 1) {
       setCount(count - 1);
+      updateCartItem(item.cart_item_id, count - 1, item.is_active);
+    }
+  };
+
+  // 장바구니 수량 수정하기
+  const updateCartItem = async (cartItemId, quantity, isActive) => {
+    try {
+      const response = await fetch(`${URL}/cart/${cartItemId}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `JWT ${authToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          product_id: item.product_id,
+          quantity,
+          is_active: isActive,
+        }),
+      });
+
+      console.log(response);
+
+      if (!response.ok) {
+        throw new Error("Failed to update cart item");
+      }
+    } catch (error) {
+      console.error("Error updating cart item:", error);
     }
   };
 

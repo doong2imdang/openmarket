@@ -84,18 +84,11 @@ export default function ShoppingCartPage() {
   console.log(sameProductPrice);
 
   const prices = sameProductPrice.map((item) => item.price * item.quantity);
-
   const totalPrice = prices.reduce((a, c) => {
     return a + c;
   }, 0);
-
-  console.log(totalPrice);
-
   const shippingFee = sameProductPrice.map((item) => item.shipping_fee);
-
   const maxShippingFee = Math.max(...shippingFee);
-
-  console.log(maxShippingFee);
 
   return (
     <>
@@ -161,7 +154,9 @@ export default function ShoppingCartPage() {
                 </strong>
               </div>
             </TotalPrice>
-            <OrderBtn type="button">주문하기</OrderBtn>
+            <OrderDeleteBtn>
+              <button type="button">주문하기</button>
+            </OrderDeleteBtn>
           </>
         )}
       </Main>
@@ -265,12 +260,15 @@ const TotalPrice = styled.div`
   }
 `;
 
-const OrderBtn = styled.button`
-  display: block;
-  color: #fff;
-  background-color: var(--color-green);
-  width: 220px;
-  height: 68px;
-  border-radius: 5px;
-  margin: 0 auto;
+const OrderDeleteBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  button {
+    color: #fff;
+    background-color: var(--color-green);
+    width: 220px;
+    height: 68px;
+    border-radius: 5px;
+  }
 `;
