@@ -90,6 +90,32 @@ export default function ShoppingCartPage() {
   const shippingFee = sameProductPrice.map((item) => item.shipping_fee);
   const maxShippingFee = Math.max(...shippingFee);
 
+  console.log(isChecked);
+
+  // 장바구니 상품 전체삭제하기
+  const handleDeleteAllItems = async () => {
+    if (isChecked === true) {
+      try {
+        const response = await fetch(`${URL}/cart`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `JWT ${authToken}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to delete all items from the cart.");
+        }
+
+        setCartItems([]);
+
+        setIsChecked(false);
+      } catch (error) {
+        console.error("Error deleting all items from the cart:", error);
+      }
+    }
+  };
+
   return (
     <>
       <Header />
@@ -156,6 +182,9 @@ export default function ShoppingCartPage() {
             </TotalPrice>
             <OrderDeleteBtn>
               <button type="button">주문하기</button>
+              <button type="button" onClick={handleDeleteAllItems}>
+                삭제하기
+              </button>
             </OrderDeleteBtn>
           </>
         )}
