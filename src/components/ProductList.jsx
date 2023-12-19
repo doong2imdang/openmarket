@@ -35,13 +35,26 @@ export default function ProductList() {
             <Link to={`/products/${product.product_id}`}>
               <span>{product.product_name}</span>
             </Link>
-            <strong>{product.price.toLocaleString()}원</strong>
+
+            {product.stock <= 0 ? (
+              <SoldOutSign>SOLD OUT</SoldOutSign>
+            ) : (
+              <strong>{product.price.toLocaleString()}원</strong>
+            )}
           </li>
         ))}
       </UlStyle>
     </>
   );
 }
+
+const SoldOutSign = styled.strong`
+  background-color: black;
+  color: #fff;
+  width: 150px;
+  padding: 5px;
+  text-align: center;
+`;
 
 const UlStyle = styled.ul`
   display: flex;
