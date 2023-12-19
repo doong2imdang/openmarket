@@ -7,6 +7,7 @@ import ShoppingCartPage from "../pages/ShoppingCartPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
 import MyPage from "../pages/MyPage";
 import BuyNow from "../pages/BuyNow";
+import ErrorPage from "../pages/ErrorPage";
 
 export default function Router() {
   return (
@@ -18,6 +19,7 @@ export default function Router() {
       <Route path="/products/:product_id" element={<ProductDetailPage />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/buynow" element={<BuyNow />} />
+      <Route path="/error" element={<ErrorPage />} />
     </Routes>
   );
 }
