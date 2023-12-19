@@ -19,7 +19,7 @@ export default function Router() {
       <Route path="/products/:product_id" element={<ProductDetailPage />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/buynow" element={<BuyNow />} />
-      <Route path="/error" element={<ErrorPage />} />
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 }
