@@ -17,9 +17,12 @@ export default function ProductDetailPage() {
   const [product, setProduct] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(product && product.stock <= 0 ? 0 : 1);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  console.log(product && product.stock);
+  console.log(count);
 
   useEffect(() => {
     if (product_id) {
@@ -75,36 +78,38 @@ export default function ProductDetailPage() {
   };
 
   const addToCart = () => {
-    const requestData = {
-      product_id: product_id,
-      quantity: count,
-      check: false,
-    };
+    if (product.stock > 0) {
+      const requestData = {
+        product_id: product_id,
+        quantity: count,
+        check: false,
+      };
 
-    fetch(`${URL}/cart/`, {
-      method: "POST",
-      headers: {
-        Authorization: `JWT ${authToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("제품을 장바구니에 추가하는데 실패했습니다.");
-        }
-        return response.json();
+      fetch(`${URL}/cart/`, {
+        method: "POST",
+        headers: {
+          Authorization: `JWT ${authToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
       })
-      .then((data) => {
-        if (data.check === false) {
-          openModal();
-        } else {
-          console.log("제품이 장바구니에 성공적으로 추가되었습니다.");
-        }
-      })
-      .catch((error) => {
-        console.error("제품을 장바구니에 추가하는 중 오류발생");
-      });
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("제품을 장바구니에 추가하는데 실패했습니다.");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          if (data.check === false) {
+            openModal();
+          } else {
+            console.log("제품이 장바구니에 성공적으로 추가되었습니다.");
+          }
+        })
+        .catch((error) => {
+          console.error("제품을 장바구니에 추가하는 중 오류발생");
+        });
+    }
   };
 
   return (
@@ -124,36 +129,61 @@ export default function ProductDetailPage() {
               <ProductDetailDesc>
                 <p>{product.store_name}</p>
                 <h2>{product.product_name}</h2>
-                <span>
-                  <strong>{product.price.toLocaleString()}</strong>원
-                </span>
+                {product.stock <= 0 ? (
+                  <SoldOut>재입고 알림 SMS</SoldOut>
+                ) : (
+                  <span>
+                    <strong>{product.price.toLocaleString()}</strong>원
+                  </span>
+                )}
+
                 <p className="delivery">택배배송 / 무료배송</p>
                 <ProductCount>
                   <button className="btn-minus" onClick={handleMinusButton}>
                     <img src={MinusLine} alt="" />
                   </button>
-                  <p>{count}</p>
+                  {product.stock <= 0 ? <p>0</p> : <p>{count}</p>}
+
                   <button className="btn-plus" onClick={handlePlusButton}>
                     <img src={PlusLine} alt="" />
                   </button>
                 </ProductCount>
                 <TotalPrice>
                   <p className="totalProductPrice">총 상품 금액</p>
-                  <p className="totalCount">
-                    총 수량 <strong>{count}</strong>개
-                  </p>
+                  {product.stock <= 0 ? (
+                    <p className="totalCount">
+                      총 수량 <strong>0</strong>개
+                    </p>
+                  ) : (
+                    <p className="totalCount">
+                      총 수량 <strong>{count}</strong>개
+                    </p>
+                  )}
                   <span>|</span>
-                  <p className="totalPrice">
-                    <strong>{totalPrcie.toLocaleString()}</strong>원
-                  </p>
+                  {product.stock <= 0 ? (
+                    <p className="totalPrice">
+                      <strong>0</strong>원
+                    </p>
+                  ) : (
+                    <p className="totalPrice">
+                      <strong>{totalPrcie.toLocaleString()}</strong>원
+                    </p>
+                  )}
                 </TotalPrice>
                 <PurchaseOrCart>
                   <button className="btn-purchase" onClick={handleBuyNow}>
                     바로 구매
                   </button>
-                  <button className="btn-cart" onClick={addToCart}>
-                    장바구니
-                  </button>
+
+                  {product.stock <= 0 ? (
+                    <button type="button" className="btn-soldout">
+                      SOLD OUT
+                    </button>
+                  ) : (
+                    <button className="btn-cart" onClick={addToCart}>
+                      장바구니
+                    </button>
+                  )}
                   {isModalOpen && <Modal closeModal={closeModal} />}
                 </PurchaseOrCart>
               </ProductDetailDesc>
@@ -180,6 +210,13 @@ export default function ProductDetailPage() {
     </>
   );
 }
+
+const SoldOut = styled.button`
+  border: 1px solid var(--color-grey);
+  font-size: 20px;
+  padding: 2px;
+  border-radius: 5px;
+`;
 
 const ProductDetailContainer = styled.div`
   padding: 75px 0;
@@ -322,6 +359,11 @@ const PurchaseOrCart = styled.div`
 
   .btn-cart {
     background-color: var(--color-grey);
+    width: 200px;
+  }
+
+  .btn-soldout {
+    background-color: black;
     width: 200px;
   }
 `;
