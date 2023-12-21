@@ -48,7 +48,7 @@ export default function ProductList() {
   );
 }
 
-const SoldOutSign = styled.strong`
+export const SoldOutSign = styled.strong`
   background-color: black;
   color: #fff;
   width: 150px;
