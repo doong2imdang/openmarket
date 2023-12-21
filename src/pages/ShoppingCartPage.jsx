@@ -21,10 +21,6 @@ export default function ShoppingCartPage() {
     setIsChecked(!isChecked);
   };
 
-  console.log(authToken);
-  console.log(products);
-  console.log(cartItems);
-
   // 장바구니 목록 불러오는 fetch
   useEffect(() => {
     fetch(`${URL}/cart/`, {
