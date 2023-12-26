@@ -1,4 +1,4 @@
-import { atom, selector, useRecoilCallback } from "recoil";
+import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
 
 const { persistAtom } = recoilPersist();
@@ -18,11 +18,4 @@ export const modalItems = atom({
 export const isProductInCartState = atom({
   key: "isProductInCartState",
   default: false,
-});
-
-export const setProductInCartState = selector({
-  key: "setProductInCartState",
-  set: ({ set }, value) => {
-    set(isProductInCartState, value);
-  },
 });
