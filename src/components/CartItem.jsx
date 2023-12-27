@@ -33,10 +33,27 @@ export default function CardItem({ item, isChecked }) {
     }
   };
 
-  // 장바구니 수량 수정하기
-  const updateCartItem = async (cartItemId, quantity, isActive) => {
+  // 장바구니 상품 개별 삭제하기
+  const handleDeleteItem = async () => {
     try {
-      const response = await fetch(`${URL}/cart/${cartItemId}`, {
+      const response = await fetch(`${URL}/cart/${item.cart_item_id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `JWT ${authToken}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to delete each items from the cart.");
+      }
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
+  };
+
+  // 장바구니 수량 수정하기
+  const updateCartItem = async (quantity, isActive) => {
+    try {
+      const response = await fetch(`${URL}/cart/${item.cart_item_id}`, {
         method: "PUT",
         headers: {
           Authorization: `JWT ${authToken}`,
@@ -44,7 +61,7 @@ export default function CardItem({ item, isChecked }) {
         },
         body: JSON.stringify({
           product_id: item.product_id,
-          quantity,
+          quantity: quantity,
           is_active: isActive,
         }),
       });
@@ -91,7 +108,7 @@ export default function CardItem({ item, isChecked }) {
     };
 
     handleGetProducts();
-  }, []);
+  }, [item.product_id, products]);
 
   const formattedPrice = productInfo.productPrice
     ? productInfo.productPrice.toLocaleString()
@@ -139,7 +156,7 @@ export default function CardItem({ item, isChecked }) {
             <button type="button">주문하기</button>
           </ProductPrice>
           <DeleteBtnStyle>
-            <img src={DeleteBtn} alt="삭제버튼" />
+            <img src={DeleteBtn} alt="삭제버튼" onClick={handleDeleteItem} />
           </DeleteBtnStyle>
         </CartContainer>
       )}
